@@ -30,9 +30,9 @@ app.use(function (req, res, next) {
  
 app.get('/events', events.findAll);
 //app.get('/events/:id', events.findById);
-//app.post('/events', events.addWine);
+app.post('/events', events.addEvent);
 //app.put('/events/:id', events.updateWine);
-//app.delete('/events/:id', events.deleteWine);
+app.delete('/events/:id', events.deleteEvent);
  
 app.listen(3000);
 console.log('Listening on port 3000...');

@@ -27,6 +27,36 @@ exports.findAll = function(req, res) {
     });
 };
 
+exports.addEvent = function(req, res) {
+    var events = req.body;
+    console.log('Adding events: ' + JSON.stringify(events));
+    db.collection('events', function(err, collection) {
+        collection.insert(events, {safe:true}, function(err, result) {
+            if (err) {
+                res.send({'error':'An error has occurred'});
+            } else {
+                console.log('Success: ' + JSON.stringify(result[0]));
+                res.send(result[0]);
+            }
+        });
+    });
+};
+
+exports.deleteEvent = function(req, res) {
+    var id = req.params.id;
+    console.log('Deleting events: ' + id);
+    db.collection('events', function(err, collection) {
+        collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
+            if (err) {
+                res.send({'error':'An error has occurred - ' + err});
+            } else {
+                console.log('' + result + ' document(s) deleted');
+                res.send(req.body);
+            }
+        });
+    });
+};
+
 //exports.findById = function(req, res) {
 //    var id = req.params.id;
 //    console.log('Retrieving events: ' + id);
@@ -38,20 +68,6 @@ exports.findAll = function(req, res) {
 //};
 //
 //
-//exports.addWine = function(req, res) {
-//    var events = req.body;
-//    console.log('Adding events: ' + JSON.stringify(events));
-//    db.collection('wines', function(err, collection) {
-//        collection.insert(events, {safe:true}, function(err, result) {
-//            if (err) {
-//                res.send({'error':'An error has occurred'});
-//            } else {
-//                console.log('Success: ' + JSON.stringify(result[0]));
-//                res.send(result[0]);
-//            }
-//        });
-//    });
-//}
 //
 //exports.updateWine = function(req, res) {
 //    var id = req.params.id;
@@ -71,20 +87,7 @@ exports.findAll = function(req, res) {
 //    });
 //}
 //
-//exports.deleteWine = function(req, res) {
-//    var id = req.params.id;
-//    console.log('Deleting events: ' + id);
-//    db.collection('wines', function(err, collection) {
-//        collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
-//            if (err) {
-//                res.send({'error':'An error has occurred - ' + err});
-//            } else {
-//                console.log('' + result + ' document(s) deleted');
-//                res.send(req.body);
-//            }
-//        });
-//    });
-//}
+
  
 /*--------------------------------------------------------------------------------------------------------------------*/
 // Populate database with sample data -- Only used once: the first time the application is started.

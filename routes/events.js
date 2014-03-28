@@ -57,38 +57,25 @@ exports.deleteEvent = function(req, res) {
     });
 };
 
-//exports.findById = function(req, res) {
-//    var id = req.params.id;
-//    console.log('Retrieving events: ' + id);
-//    db.collection('wines', function(err, collection) {
-//        collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
-//            res.send(item);
-//        });
-//    });
-//};
-//
-//
-//
-//exports.updateWine = function(req, res) {
-//    var id = req.params.id;
-//    var events = req.body;
-//    console.log('Updating events: ' + id);
-//    console.log(JSON.stringify(events));
-//    db.collection('wines', function(err, collection) {
-//        collection.update({'_id':new BSON.ObjectID(id)}, events, {safe:true}, function(err, result) {
-//            if (err) {
-//                console.log('Error updating events: ' + err);
-//                res.send({'error':'An error has occurred'});
-//            } else {
-//                console.log('' + result + ' document(s) updated');
-//                res.send(events);
-//            }
-//        });
-//    });
-//}
-//
+exports.updateEvent = function(req, res) {
+    var id = req.params.id;
+    var events = req.body;
+    console.log('Updating events: ' + id);
+    console.log(JSON.stringify(events));
+    db.collection('events', function(err, collection) {
+        collection.update({'_id':new BSON.ObjectID(id)}, events, {safe:true}, function(err, result) {
+            if (err) {
+                console.log('Error updating events: ' + err);
+                res.send({'error':'An error has occurred'});
+            } else {
+                console.log('' + result + ' document(s) updated');
+                res.send(events);
+            }
+        });
+    });
+};
 
- 
+
 /*--------------------------------------------------------------------------------------------------------------------*/
 // Populate database with sample data -- Only used once: the first time the application is started.
 // You'd typically not find this code in a real-life app, since the database would already exist.

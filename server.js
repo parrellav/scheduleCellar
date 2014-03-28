@@ -29,9 +29,8 @@ app.use(function (req, res, next) {
 });
  
 app.get('/events', events.findAll);
-//app.get('/events/:id', events.findById);
 app.post('/events', events.addEvent);
-//app.put('/events/:id', events.updateWine);
+app.put('/events/:id', events.updateEvent);
 app.delete('/events/:id', events.deleteEvent);
  
 app.listen(3000);
